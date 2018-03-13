@@ -1,27 +1,38 @@
-#include <unistd.h>
-#include <stdlib.h>
+/*  to compile and run:
+ *  gcc kush.c -o kush
+ *  ./kush
+ */
 
-#define IN 0
-#define OUT 1
-#define ERR 2
-
-#define TREE 0xF0, 0x9F, 0x8C, 0xB2, '\0'
-#define PSIZE 5
-#define INSIZE 32
-
-//Prints a tree emoji to stdout and then wait for input
-//from stdin. It then echos whatever was input.
-//Typing more than 32 characters causes undefined behavior
-
-//The terminal used to run this program must support unicode
-//or you will see a random symbol for the prompt
+#include "kush.h"
 
 int main(void)
 {
     const char prompt[PSIZE] = {TREE};
+prompt_start:
     write(OUT, prompt, PSIZE);
     char input[INSIZE];
     read(IN, input, INSIZE);
     write(OUT, input, INSIZE);
+    goto prompt_start;
     exit(0);
+}
+
+int cat(const char* input)
+{
+    return 0;
+}
+
+int cp(const char* input)
+{
+    return 0;
+}
+
+int ls() 
+{
+    return 0;
+}
+
+int grep(const char* input)
+{
+    return 0;
 }
