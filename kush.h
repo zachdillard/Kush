@@ -13,3 +13,6 @@ int cat(const char* input);
 int cp(const char* input);
 int ls();
 int grep(const char* input);
+int equals(const char*, int, const char*);
+int other_equals(const char*, const char*);
+int string_size(const char*);
