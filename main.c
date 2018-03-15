@@ -53,7 +53,7 @@ int is_command(const char* cmd) {
 }
 
 int main() {
-    const char prompt[] = {TREE};
+    const char prompt[] = {TREE + ' '};
 prompt_start:
     write(OUT, prompt, sizeof(prompt));
     char input[INSIZE];
@@ -63,9 +63,9 @@ prompt_start:
        return 0;
     else {
         if(is_command(input))
-            write(OUT, "valid command\n", 15);
+            write(OUT, "valid kush command\n", 20);
         else
-            write(OUT, "not valid command\n", 19);
+            write(OUT, "not a valid kush command\n", 25);
         goto prompt_start;
     }
 }
