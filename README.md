@@ -1,5 +1,5 @@
 # Kush
-The Kennesaw User Shell is a simple command line interpeter that has five commands.
+The Kennesaw Unix Shell is a simple command line interpeter that has five commands.
 ## exit
 Terminates the shell.
 ## cat
