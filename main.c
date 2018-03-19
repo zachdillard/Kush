@@ -1,5 +1,11 @@
 #include <unistd.h>
 #include <stdlib.h>
+#include <dirent.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
+
+
 
 #define IN 0
 #define OUT 1
@@ -8,6 +14,7 @@
 #define TREE 0xF0, 0x9F, 0x8C, 0xB2, '\0'
 #define PSIZE 5
 #define INSIZE 32
+
 
 void string_clear(char* input, unsigned int size) {
     for(int i = 0; i < size; i++)
@@ -41,7 +48,76 @@ void print(const char* string) {
 }
 
 int cat(const char* filename) {return 0;}
-int ls(void) {return 0;}
+
+int ls(void) {
+    print("It works!\n");
+        DIR *dir;
+        struct dirent *dp;
+        char * file_name;
+        dir = opendir("."); //opens at current directory
+        while ((dp=readdir(dir)) != NULL) { //if first entry in dirent structure is null
+            if ( !strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..") )
+            {
+                continue;
+            } else {
+                file_name = dp->d_name; // file_name is allocated to char pointer
+                printf("\"%s\"\n",file_name); //print directory
+            }
+        }
+        closedir(dir);
+    return 0;
+}
+
+int l(void){        //to go with ls function as ls -l
+    DIR *dir;
+    struct dirent *dp;
+    struct stat fileStat;
+    char * file_name;
+    char buf[512];
+    dir = opendir(".");
+    struct passwd *tf;
+    struct group *gf;
+    while ((dp=readdir(dir)) != NULL) {
+        if ( !strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..") )
+        {
+            continue;
+        } else {
+            file_name = dp->d_name; // use it
+            printf("%s",file_name); //print directory
+            sprintf(buf, "%s     ", file_name);
+            stat(buf, &fileStat);
+            switch (fileStat.st_mode & S_IFMT) {
+                case S_IFBLK:   printf("b "); break;
+                case S_IFCHR:  printf("c "); break;
+                case S_IFDIR:  printf("d "); break; //Subdirectory
+                case S_IFIFO:  printf("p "); break; //fifo
+                case S_IFLNK:  printf("l "); break; //Sym link
+                case S_IFSOCK: printf("s "); break;
+                    //File type isn't identified
+                default:       printf("- "); break;
+            }
+
+            printf( (fileStat.st_mode & S_IRUSR) ? "r " : "- ");
+            printf( (fileStat.st_mode & S_IWUSR) ? "w " : "- ");
+            printf( (fileStat.st_mode & S_IXUSR) ? "x " : "- ");
+            printf( (fileStat.st_mode & S_IRGRP) ? "r " : "- ");
+            printf( (fileStat.st_mode & S_IWGRP) ? "w " : "- ");
+            printf( (fileStat.st_mode & S_IXGRP) ? "x " : "- ");
+            printf( (fileStat.st_mode & S_IROTH) ? "r " : "- ");
+            printf( (fileStat.st_mode & S_IWOTH) ? "w " : "- ");
+            printf( (fileStat.st_mode & S_IXOTH) ? "x " : "- ");
+            printf("\t%d ", fileStat.st_nlink);
+            printf("%lld",fileStat.st_size);
+            printf("\n");
+
+
+
+        }
+    }
+    closedir(dir);
+    return 0;
+}
+
 int cp(const char* src, const char* dest) {return 0;}
 int grep(const char* string, const char* filename) {return 0;}
 
@@ -76,6 +152,9 @@ prompt_start:
     else {
         if(is_command(input))
             write(OUT, "valid kush command\n", 20);
+            if(string_equals(input,"ls\n")){
+                ls();
+            }
         else
             write(OUT, "not a valid kush command\n", 25);
         goto prompt_start;
