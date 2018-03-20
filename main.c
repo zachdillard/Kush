@@ -98,29 +98,29 @@ int l(void){        //to go with ls function as ls -l
             continue;
         } else {
             file_name = dp->d_name; // use it
-            printf("%s",file_name); //print directory
-            sprintf(buf, "%s     ", file_name);
+            printf("%s\t",file_name); //print directory
+            sprintf(buf, "%s", file_name);
             stat(buf, &fileStat);
             switch (fileStat.st_mode & S_IFMT) {
-                case S_IFBLK:   printf("b "); break;
-                case S_IFCHR:  printf("c "); break;
-                case S_IFDIR:  printf("d "); break; //Subdirectory
-                case S_IFIFO:  printf("p "); break; //fifo
-                case S_IFLNK:  printf("l "); break; //Sym link
-                case S_IFSOCK: printf("s "); break;
+                case S_IFBLK:   printf("b"); break;
+                case S_IFCHR:  printf("c"); break;
+                case S_IFDIR:  printf("d"); break; //Subdirectory
+                case S_IFIFO:  printf("p"); break; //fifo
+                case S_IFLNK:  printf("l"); break; //Sym link
+                case S_IFSOCK: printf("s"); break;
                     //File type isn't identified
-                default:       printf("- "); break;
+                default:       printf("-"); break;
             }
 
-            printf( (fileStat.st_mode & S_IRUSR) ? "r " : "- ");//user permissions
-            printf( (fileStat.st_mode & S_IWUSR) ? "w " : "- ");
-            printf( (fileStat.st_mode & S_IXUSR) ? "x " : "- ");
-            printf( (fileStat.st_mode & S_IRGRP) ? "r " : "- ");//group permissions
-            printf( (fileStat.st_mode & S_IWGRP) ? "w " : "- ");
-            printf( (fileStat.st_mode & S_IXGRP) ? "x " : "- ");
-            printf( (fileStat.st_mode & S_IROTH) ? "r " : "- ");//other permissions
-            printf( (fileStat.st_mode & S_IWOTH) ? "w " : "- ");
-            printf( (fileStat.st_mode & S_IXOTH) ? "x " : "- ");
+            printf( (fileStat.st_mode & S_IRUSR) ? "r" : "-"); //user permissions
+            printf( (fileStat.st_mode & S_IWUSR) ? "w" : "-");
+            printf( (fileStat.st_mode & S_IXUSR) ? "x" : "-");
+            printf( (fileStat.st_mode & S_IRGRP) ? "r" : "-");//group permissions
+            printf( (fileStat.st_mode & S_IWGRP) ? "w" : "-");
+            printf( (fileStat.st_mode & S_IXGRP) ? "x" : "-");
+            printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");//others permissions
+            printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
+            printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
             printf("\t%d ", fileStat.st_nlink);
             printf("%lld",fileStat.st_size);
             printf("\n");
