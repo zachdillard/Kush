@@ -65,7 +65,6 @@ int cat(const char* filename) {
 }
 
 int ls(void) {
-    print("It works!\n");
         DIR *dir;
         struct dirent *dp;
         char * file_name;
