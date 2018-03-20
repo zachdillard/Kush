@@ -185,9 +185,6 @@ bool is_command(const char* cmd) {
         return false;
 }
 
-char split_commands(const char* input, const char* commands) {
-}
-
 int main() {
    /* //const char prompt[] = {TREE + ' '};
 	const char prompt[] = "$";
