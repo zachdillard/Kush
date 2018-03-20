@@ -45,8 +45,22 @@ void print(const char* string) {
     write(OUT, string, sizeof(string));
 }
 
-int cat() {
-	printf("cat command\n");
+int cat(const char* filename) {
+	FILE* file;
+	if((file = fopen(filename, "r")) == NULL)
+	{
+		printf("cat: %s: no such file or directory found\n", filename);
+	}
+	else
+	{
+		int getFileContents = fgetc(file);
+		while(getFileContents != EOF)
+		{
+			printf("%c", getFileContents);
+			getFileContents = fgetc(file);
+		}
+	}
+	fclose(file);
 	return 0;
 }
 
@@ -59,7 +73,6 @@ int ls(void) {
         if ( !strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..") ) {
             continue;
         } else {
-<<<<<<< HEAD
             file_name = dp->d_name; // use it
             printf("%s",file_name); //print directory
             sprintf(buf, "%s     ", file_name);
@@ -88,12 +101,8 @@ int ls(void) {
             printf("%lld",fileStat.st_size); //size
             printf("\n");
 
-
-
-=======
             file_name = dp->d_name; // file_name is allocated to char pointer
             printf("%s\n",file_name); //print directory
->>>>>>> fb394bf362c8a25fd87cb036cbc8f1736c268232
         }
     }
     closedir(dir);
@@ -160,7 +169,7 @@ int cp(const char* src, const char* dest)
 		return 3;
 	fseek(f1,0L,SEEK_END);
 	length = ftell(f1);
-	printf("%d\n", length);
+	printf("%ld\n", length);
 	rewind(f1);
 
 	char *buf = (char*) malloc(sizeof(char)*length);
@@ -255,16 +264,19 @@ prompt_start:
 			else
 				printf("Not a valid ls argument\n");
 		}
-		else if (strcmp(token, "cat\n") == 0) {
-			cat();
+		else if (strcmp(token, "cat") == 0) {
+			char* filename = strtok(NULL, d);
+			cat(filename);
 		}
 		else if (strcmp(token, "cp") == 0) {
-			const char* src = strtok(NULL, d);
+			char* src = strtok(NULL, d);
+			filename--;
+			*filename = 0;
 			if (src != NULL)
 			{
 				const char *dest = strtok(NULL, d);
-				if (dest != NULL)
-					cp(arg1, arg2);
+				if (dest != NULL);
+					//cp(arg1, arg2);
 				else
 				printf("Not a valid ls argument\n");
 			}
