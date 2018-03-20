@@ -245,9 +245,6 @@ prompt_start:
 		}
 		else if (strcmp(token, "cp") == 0) {
 			char* src = strtok(NULL, d);
-			const char* file[100];
-            		memcpy(file, filename, sizeof(filename) - 1);
-			cat(file);
 			if (src != NULL)
 			{
 				const char *dest = strtok(NULL, d);
