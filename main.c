@@ -220,18 +220,18 @@ prompt_start:
 
 	const char prompt[] = "$";
 	char input[80];
-	const char d[2] = " ";
+	const char d[] = " \n";
 	do {
 		printf("%s", prompt);
 		fflush(stdout);
 		fgets(input, 80, stdin);
 		const char* token = strtok(input, d);
-		if (strcmp(token, "ls\n") == 0) {
+		if (strcmp(token, "ls") == 0) {
 			ls();
 		}
 		else if (strcmp(token, "ls") == 0) {
 			const char* arg = strtok(NULL, d);
-			if (strcmp(arg, "-l\n") == 0)
+			if (strcmp(arg, "-l") == 0)
 				l();
 			else
 				printf("Not a valid ls argument\n");
@@ -253,14 +253,14 @@ prompt_start:
 			else
 				printf("Not a valid ls argument2\n");
 		}
-		else if (strcmp(token, "grep\n") == 0) {
+		else if (strcmp(token, "grep") == 0) {
 			grep();
 		}
 		else {
-			if(strcmp("exit\n", token) != 0)
+			if(strcmp("exit", token) != 0)
 				printf("Not a valid command\n");
 		}
-	} while (strcmp("exit\n", input) != 0);
+	} while (strcmp("exit", input) != 0);
 	
 	return 0;
 }
