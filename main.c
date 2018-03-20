@@ -115,12 +115,33 @@ int l(void) {        //to go with ls function as ls -l
 }
 
 
-int cp() {
-	printf("cp command\n");
+int cp(const char* src, const char* dest) 
+{
+	FILE *f1;
+	FILE *f2;
+	long length;
+	
+	f1 = fopen(src, "r");
+	f2 = fopen(dest, "w");
+	if(f1 == NULL || f2 == NULL)
+		return 3;
+	fseek(f1,0L,SEEK_END);
+	length = ftell(f1);
+	printf("%d\n", length);
+	rewind(f1);
+
+	char *buf = (char*) malloc(sizeof(char)*length);
+
+	size_t bytes = fread(buf, length, sizeof(char), f1);
+	
+	bytes = fwrite(buf, length, sizeof(char), f2);
+	
+	
+	fclose(f1);
+	fclose(f2);
+	free(buf);
 	return 0;
 }
-
-
 
 int grep() {
 	//grep "hi there" file1.txt file2.txt
@@ -164,7 +185,6 @@ prompt_start:
 	const char* token = strtok(input, d);
 	printf("%s", token);
 	printf("%d", strcmp(token, "ls"));
-
     if(string_equals(input, "exit\n"))
        return 0;
     else {
@@ -205,8 +225,18 @@ prompt_start:
 		else if (strcmp(token, "cat\n") == 0) {
 			cat();
 		}
-		else if (strcmp(token, "cp\n") == 0) {
-			cp();
+		else if (strcmp(token, "cp") == 0) {
+			const char* src = strtok(NULL, d);
+			if (src != NULL)
+			{
+				const char *dest = strtok(NULL, d);
+				if (dest != NULL)
+					cp(arg1, arg2);
+				else
+				printf("Not a valid ls argument\n");
+			}
+			else
+				printf("Not a valid ls argument\n");
 		}
 		else if (strcmp(token, "grep\n") == 0) {
 			grep();
