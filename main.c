@@ -245,13 +245,13 @@ prompt_start:
 			if (src != NULL)
 			{
 				const char *dest = strtok(NULL, d);
-				if (dest != NULL);
-					//cp(arg1, arg2);
+				if (dest != NULL)
+					cp(src, dest);
 				else
-				printf("Not a valid ls argument\n");
+				printf("Not a valid ls argument1\n");
 			}
 			else
-				printf("Not a valid ls argument\n");
+				printf("Not a valid ls argument2\n");
 		}
 		else if (strcmp(token, "grep\n") == 0) {
 			grep();
