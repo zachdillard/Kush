@@ -75,7 +75,7 @@ int ls(void) {
                 continue;
             } else {
                 file_name = dp->d_name; // file_name is allocated to char pointer
-                printf("\"%s\"\n",file_name); //print directory
+                printf("%s\n",file_name); //print directory
             }
         }
         closedir(dir);
@@ -227,14 +227,16 @@ prompt_start:
 		fgets(input, 80, stdin);
 		const char* token = strtok(input, d);
 		if (strcmp(token, "ls") == 0) {
-			ls();
-		}
-		else if (strcmp(token, "ls") == 0) {
-			const char* arg = strtok(NULL, d);
-			if (strcmp(arg, "-l") == 0)
-				l();
-			else
-				printf("Not a valid ls argument\n");
+            const char* arg = strtok(NULL, d);
+            if(arg == NULL) {
+                ls();
+            }
+            else if (strcmp(arg, "-l") == 0) {
+                l();
+            }
+            else {
+                printf("failure");
+            }
 		}
 		else if (strcmp(token, "cat") == 0) {
 			char* filename = strtok(NULL, d);
