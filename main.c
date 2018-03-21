@@ -6,6 +6,7 @@
 #include <stdarg.h>
 #include <sys/stat.h>
 #include <stdbool.h>
+#include <time.h>
 
 #define IN 0
 #define OUT 1
@@ -91,9 +92,7 @@ int l(void){        //to go with ls function as ls -l
     char * file_name;
     char buf[512];
     dir = opendir(".");
-    struct passwd *tf;
-    struct group *gf;
-    char *t;
+    char* t;
     printf("Permissions   SLinks  Size  Type      Last Accessed\t    Name\n");
     while ((dp=readdir(dir)) != NULL) {
         if ( !strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..") )
@@ -103,7 +102,7 @@ int l(void){        //to go with ls function as ls -l
             file_name = dp->d_name; // store directory name in file_name
             sprintf(buf, "%s", file_name);
             stat(buf, &fileStat);
-            t = ctime(&fileStat.st_atime);
+            t = (char*) time(&fileStat.st_atime);
             printf( (fileStat.st_mode & S_IRUSR) ? "r" : "-");//user read
             printf( (fileStat.st_mode & S_IWUSR) ? "w" : "-");//user write
             printf( (fileStat.st_mode & S_IXUSR) ? "x" : "-");//user execute
