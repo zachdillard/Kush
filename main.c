@@ -91,6 +91,8 @@ int l(void){        //to go with ls function as ls -l
     dir = opendir(".");
     struct passwd *tf;
     struct group *gf;
+    char *t;
+    printf("Permissions   SLinks  Size  Type      Last Accessed\t    Name\n");
     while ((dp=readdir(dir)) != NULL) {
         if ( !strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..") )
         {
@@ -99,35 +101,43 @@ int l(void){        //to go with ls function as ls -l
             file_name = dp->d_name; // store directory name in file_name
             sprintf(buf, "%s", file_name);
             stat(buf, &fileStat);
-            printf( (fileStat.st_mode & S_IRUSR) ? "r " : "- "); //user permissions
-            printf( (fileStat.st_mode & S_IWUSR) ? "w " : "- ");
-            printf( (fileStat.st_mode & S_IXUSR) ? "x " : "- ");
-            printf( (fileStat.st_mode & S_IRGRP) ? "r " : "- ");//group permissions
-            printf( (fileStat.st_mode & S_IWGRP) ? "w " : "- ");
-            printf( (fileStat.st_mode & S_IXGRP) ? "x " : "- ");
-            printf( (fileStat.st_mode & S_IROTH) ? "r " : "- ");//others permissions
-            printf( (fileStat.st_mode & S_IWOTH) ? "w " : "- ");
-            printf( (fileStat.st_mode & S_IXOTH) ? "x " : "- ");
-            printf("\t%-10d  ", fileStat.st_nlink);
+            t = ctime(&fileStat.st_atime);
+            printf( (fileStat.st_mode & S_IRUSR) ? "r" : "-");//user read
+            printf( (fileStat.st_mode & S_IWUSR) ? "w" : "-");//user write
+            printf( (fileStat.st_mode & S_IXUSR) ? "x" : "-");//user execute
+            printf( (fileStat.st_mode & S_IRGRP) ? "r" : "-");//group read
+            printf( (fileStat.st_mode & S_IWGRP) ? "w" : "-");//group write
+            printf( (fileStat.st_mode & S_IXGRP) ? "x" : "-");//group execute
+            printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");//others read
+            printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");//others write
+            printf( (fileStat.st_mode & S_IXOTH) ? "x\t" : "-\t");//others execute
+            printf("%-5d ", fileStat.st_nlink);
             int max_width, value;
             max_width = 8;
             value = fileStat.st_size;
-            printf("%-10d  ",value);
+            printf("%-5d ",value);
 
             switch (fileStat.st_mode & S_IFMT) {
-                case S_IFBLK:   printf("b  "); break;
-                case S_IFCHR:  printf("c  "); break;
-                case S_IFDIR:  printf("d  "); break; //Subdirectory
-                case S_IFIFO:  printf("p  "); break; //fifo
-                case S_IFLNK:  printf("l  "); break; //Sym link
-                case S_IFSOCK: printf("s  "); break;
+                case S_IFBLK:  printf("%-5s","b  "); break; //Block special file
+                case S_IFCHR:  printf("%-5s","c  "); break; //Character special file
+                case S_IFDIR:  printf("%-5s","d  "); break; //Directory file
+                case S_IFIFO:  printf("%-5s","p  "); break; //FIFO or pipe
+                case S_IFLNK:  printf("%-5s","l  "); break; //Symbolic link
+                case S_IFSOCK: printf("%-5s","s  "); break; //Socket
+                case S_IFREG:  printf("%-5s","r  "); break; //regular file
                     //File type isn't identified
-                default:       printf("-  "); break;
+                default:       printf("%-5s","-  "); break;
             }
 
 
         }
-        printf("%s\n",file_name); //print directory
+        if (t[strlen(t)-1] == '\n')
+            t[strlen(t)-1] = '\0';
+        printf("%-10s  ", t);
+        printf("%-10s \n",file_name); //print directory
+
+
+
     }
     closedir(dir);
     return 0;
