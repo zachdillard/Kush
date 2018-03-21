@@ -75,9 +75,11 @@ int ls(void) {
                 continue;
             } else {
                 file_name = dp->d_name; // file_name is allocated to char pointer
-                printf("%s\n",file_name); //print directory
+                if(strncmp(file_name, ".", strlen(".")) != 0)
+                    printf("%s\t",file_name); //print directory
             }
         }
+	printf("\n");
         closedir(dir);
     return 0;
 }
@@ -229,7 +231,7 @@ prompt_start:
     }
 	goto prompt_start;*/
 
-	const char prompt[] = "$";
+	const char prompt[] = "$ ";
 	char input[80];
 	const char d[] = " \n";
 	do {
