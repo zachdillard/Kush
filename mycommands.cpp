@@ -40,7 +40,7 @@ int ls(void) {
             continue;
         } else {
             file_name = dp->d_name; // file_name is allocated to char pointer
-            if(strncmp(dp->d_name, ".", sizeof(".") != 0) {
+            if(strncmp(dp->d_name, ".", sizeof(".")) != 0) {
                     printf("%s\t",file_name); //print directory
                }
         }
