@@ -10,7 +10,7 @@
 #include <string.h>
 #include <time.h>
 
-extern char** commands;
+extern char* commands[];
 extern size_t command_count;
 
 int cat(const char* filename) {
