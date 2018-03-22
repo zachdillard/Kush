@@ -1,14 +1,16 @@
 #include "mycommands.h"
 
-#include <unistd.h>
 #include <stdlib.h>
-#include <dirent.h>
 #include <stdio.h>
+
+#include <sys/stat.h
+#include <unistd.h>
+#include <dirent.h>
+
 #include <string.h>
-#include <stdarg.h>
-#include <sys/stat.h>
-#include <stdbool.h>
 #include <time.h>
+
+extern commands;
 
 int cat(const char* filename) {
     FILE* file;
@@ -142,13 +144,7 @@ int grep(const char* input) {
 }
 
 void help(void) {
-    printf("cat\n" +
-           "ls\n" +
-           "cp\n" + 
-           "grep\n" +
-           "clear\n" +
-           "exit\n"
-          );
+    
 }
 
 void clear(void) {
