@@ -161,6 +161,6 @@ void help(void) {
 }
 
 void clear(void) {
-    printf("\33[0;0H");
-    printf("\33[2J");
+    printf("\33[2J"); //clear screen
+    printf("\33[0;0H"); //move cursor to the top
 }
