@@ -147,14 +147,15 @@ int grep(const char input[]) {
     char compare[100];
     while((read = getline(&line, &length, file)) != -1) {
         for(int i = 0; i < length, i++) {
-            if(*line == *input)
-                compare[i] = *line;
+            if(*line == *input) {
+                *compare = *line;
+                compare++;
+            }
             line++;
             input++;
         }
+        printf("%s\n", compare);
     }
-    printf("%s\n", input);
-    
     return 0;
 }
 
