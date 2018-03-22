@@ -55,6 +55,9 @@ int main() {
         else if (strcmp(token, "help") == 0) {
             help();
         }
+        else if (strcmp(token, "clear") == 0) {
+            clear();
+        }
         else {
             if(strcmp("exit", token) != 0)
                 printf("Not a valid command\n");
