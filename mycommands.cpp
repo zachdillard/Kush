@@ -142,3 +142,7 @@ int grep(const char* input) {
 void help(void) {
     printf("cat\nls\ncp\ngrep\nexit\n");
 }
+
+void clear(void) {
+    printf("\33[2J");
+}
