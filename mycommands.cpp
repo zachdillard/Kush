@@ -45,7 +45,7 @@ int ls(void) {
         } else {
             file_name = dp->d_name; // file_name is allocated to char pointer
             if(strncmp(file_name, ".", strlen(".")) != 0) {
-                if((i % 5 == 0) && (i != 0))
+                if((i % 4 == 0) && (i != 0))
                     printf("\n");
                 printf("%-16s\t",file_name); //print directory
                 ++i;
