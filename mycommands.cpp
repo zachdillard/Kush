@@ -145,11 +145,12 @@ int grep(const char input[]) {
         return 1;
     }
     char compare[100];
+    int index = 0;
     while((read = getline(&line, &length, file)) != -1) {
-        for(int i = 0; i < length, i++) {
+        for(int i = 0; i < length; i++) {
             if(*line == *input) {
-                *compare = *line;
-                compare++;
+                compare[index] = *line;
+                index++;
             }
             line++;
             input++;
