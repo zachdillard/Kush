@@ -3,6 +3,8 @@ The Kennesaw Shell is a simple command line interpeter that has six commands.
 ## Commands
 ### help
 Display available commands.
+### clear
+Clear screen.
 ### exit
 Terminates the shell.
 ### cat
