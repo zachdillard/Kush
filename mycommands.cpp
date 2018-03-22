@@ -1,5 +1,3 @@
-#pragma once
-
 #include "mycommands.h"
 
 #include <stdlib.h>
@@ -147,6 +145,16 @@ int grep(const char* input) {
 }
 
 void help(void) {
+    size_t command_count = 7;
+    char* commands[] = {
+        "help",
+        "clear",
+        "exit",
+        "cat",
+        "ls",
+        "cp",
+        "grep"
+    };
     for(int i = 0; i < command_count; i++) {
         printf("%s\n", commands[i]);
     }
