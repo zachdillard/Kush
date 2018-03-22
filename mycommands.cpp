@@ -155,9 +155,11 @@ void help(void) {
         "cp",
         "grep"
     };
+    printf("\n");
     for(int i = 0; i < command_count; i++) {
-        printf("%s\n", commands[i]);
+        printf("\t%s\n", commands[i]);
     }
+    printf("\n");
 }
 
 void clear(void) {
