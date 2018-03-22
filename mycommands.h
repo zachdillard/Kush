@@ -3,19 +3,6 @@
     Header file for the Kennesaw Shell commands
  ***************************************************/
 
-#include <stdlib.h>
-
-size_t command_count = 7;
-char* commands[] = {
-    "help",
-    "clear",
-    "exit",
-    "cat",
-    "ls",
-    "cp",
-    "grep"
-};
-
 //Displays contents of file
 //Author: Brett Warner
 int cat(const char* filename);
