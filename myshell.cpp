@@ -50,7 +50,7 @@ int main() {
                 printf("cp: %s: not a valid file or directory\n", src);
         }
         else if (strcmp(token, "grep") == 0) {
-            grep("hi test.txt");
+            grep("crash");
         }
         else if (strcmp(token, "help") == 0) {
             help();
