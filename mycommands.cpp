@@ -135,32 +135,18 @@ int cp(const char* src, const char* dest)
     return 0;
 }
 
-int grep(char input[]) {
-    char* line;
+int grep(const char* input) {
+    char line[100];
     size_t length = 0;
     ssize_t read;
     FILE* file = fopen("test.txt", "r");
     if(file == NULL) {
-        printf("Invalid file\n");
+        printf("grep: %s: no such file or directory\n", "test.txt");
         return 1;
     }
     while((read = getline(&line, &length, file)) != -1) {
-        char compare[100];
-        int index = 0;
-        char* src = line;
-        char* cmp = &input[0];
-        for(int i = 0; i < length; i++) {
-            if(*src == *cmp) {
-                compare[index] = *src;
-                cmp++;
-                if(*cmp == '\0')
-                    break;
-                src++;
-                index++;
-            }
-        }
-        if(strcmp(input, compare) == 0)
-            printf("%s", line);
+        if(strstr(line, input) != NULL)
+            printf("%s\n", line);
     }
     return 0;
 }
