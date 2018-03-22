@@ -141,6 +141,6 @@ int grep() {
 }
 
 int help() {
-    printf("cat\nls\ncp\n\grep\n");
+    printf("cat\nls\ncp\n\grep\nexit\n");
     return 0;
 }
