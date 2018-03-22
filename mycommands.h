@@ -3,6 +3,7 @@
     Header file for the Kennesaw Shell commands
  ***************************************************/
 
+size_t command_count = 7;
 char* commands[] = {
     "help",
     "clear",
