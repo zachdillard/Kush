@@ -1,5 +1,5 @@
-# Kush
-The Kennesaw Unix Shell is a simple command line interpeter that has six commands.
+# Ksh
+The Kennesaw Shell is a simple command line interpeter that has six commands.
 ## help
 Display available commands.
 ## exit
