@@ -155,9 +155,10 @@ void help(void) {
         "cp",
         "grep"
     };
-    printf("\n");
     for(int i = 0; i < command_count; i++) {
-        printf("\t%s\n", commands[i]);
+        if((i % 4) == 0)
+            printf("\n");
+        printf("%s\t", commands[i]);
     }
     printf("\n");
 }
