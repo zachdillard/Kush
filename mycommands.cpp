@@ -142,13 +142,7 @@ int grep(const char* input) {
 }
 
 void help(void) {
-    printf("cat\t
-           ls\t +
-           cp\t +
-           grep\t +
-           clear\t +
-           exit\t +
-           ");
+    printf("cat\tls\tcp\tgrep\tclear\texit\t");
 }
 
 void clear(void) {
