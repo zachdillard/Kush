@@ -1,11 +1,11 @@
 ksh: myshell.o mycommands.o
-	@g++ -w -g -o ksh myshell.o mycommands.o
+	@g++ -g -o ksh myshell.o mycommands.o
 
 myshell.o: myshell.cpp mycommands.h
-	@g++ -c myshell.cpp
+	@g++ -Wc++11-compat-deprecated-writable-strings -c myshell.cpp
 
 mycommands.o: mycommands.cpp mycommands.h
-	@g++ -c mycommands.cpp
+	@g++ -Wc++11-compat-deprecated-writable-strings -c mycommands.cpp
 	
 run:
 	@./ksh
