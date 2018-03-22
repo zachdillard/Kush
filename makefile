@@ -1,13 +1,13 @@
 ksh: myshell.o mycommands.o
-	g++ -Wall -g -o ksh myshell.o mycommands.o
+	@g++ -Wall -g -o ksh myshell.o mycommands.o
 
 myshell.o: myshell.cpp mycommands.h
-	g++ -c myshell.cpp
+	@g++ -c myshell.cpp
 
 mycommands.o: mycommands.cpp mycommands.h
-	g++ -c mycommands.cpp
+	@g++ -c mycommands.cpp
 	
 run:
-	./ksh
+	@./ksh
 clean:
-	rm *.o ksh
+	@rm *.o ksh
