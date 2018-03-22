@@ -148,7 +148,7 @@ int grep(const char input[]) {
         char compare[100];
         int index = 0;
         char* src = line;
-        char* cmp = input[0];
+        char* cmp = &input[0];
         for(int i = 0; i < length; i++) {
             if(*src == *cmp) {
                 compare[index] = *src;
