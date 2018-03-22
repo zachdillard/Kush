@@ -29,7 +29,7 @@ int main() {
                 l();
             }
             else {
-                printf("failure");
+                printf("ls: illegal operation %s\n", arg);
             }
         }
         else if (strcmp(token, "cat") == 0) {
@@ -44,10 +44,10 @@ int main() {
                 if (dest != NULL)
                     cp(src, dest);
                 else
-                    printf("Not a valid ls argument1\n");
+                    printf("cp: %s: not a valid file or directory\n", dest);
             }
             else
-                printf("Not a valid ls argument2\n");
+                printf("cp: %s: not a valid file or directory\n", src);
         }
         else if (strcmp(token, "grep") == 0) {
             grep("hi test.txt");
@@ -60,7 +60,7 @@ int main() {
         }
         else {
             if(strcmp("exit", token) != 0)
-                printf("Not a valid command\n");
+                printf("ksh: %s: command not found\n", token);
         }
     } while (strcmp("exit", input) != 0);
     
