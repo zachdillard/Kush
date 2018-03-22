@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <sys/stat.h
+#include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
 
@@ -11,6 +11,7 @@
 #include <time.h>
 
 extern commands;
+extern command_count;
 
 int cat(const char* filename) {
     FILE* file;
@@ -144,7 +145,9 @@ int grep(const char* input) {
 }
 
 void help(void) {
-    
+    for(int i = 0; i < command_count; i++) {
+        printf("%s\n", commands[i]);
+    }
 }
 
 void clear(void) {
