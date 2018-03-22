@@ -125,8 +125,7 @@ int cp(const char* src, const char* dest)
     return 0;
 }
 
-int grep() {
-    const char input[] = "hello test.txt";
+int grep(const char* input) {
     char* line;
     size_t length = 0;
     ssize_t read;
@@ -140,7 +139,7 @@ int grep() {
     return 0;
 }
 
-int help() {
+void help(void) {
     printf("cat\nls\ncp\n\grep\nexit\n");
     return 0;
 }
