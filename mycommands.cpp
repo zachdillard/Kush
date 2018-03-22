@@ -141,5 +141,4 @@ int grep(const char* input) {
 
 void help(void) {
     printf("cat\nls\ncp\ngrep\nexit\n");
-    return 0;
 }
