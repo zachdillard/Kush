@@ -1,13 +1,5 @@
 # Ksh
 The Kennesaw Shell is a simple command line interpeter that has six commands.
-## Files
-makefile - build instructions
-
-myshell.cpp - shell driver
-
-mycommands.cpp - commands' implementations
-mycommmands.h - commands' declarations
-test.txt - small text file used to test commands
 ## Commands
 ### help
 Display available commands.
