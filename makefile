@@ -7,5 +7,7 @@ myshell.o: myshell.cpp mycommands.h
 mycommands.o: mycommands.cpp mycommands.h
 	g++ -c mycommands.cpp
 	
+run:
+	./ksh
 clean:
 	rm *.o ksh
