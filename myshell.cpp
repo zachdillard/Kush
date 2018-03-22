@@ -50,7 +50,7 @@ int main() {
                 printf("Not a valid ls argument2\n");
         }
         else if (strcmp(token, "grep") == 0) {
-            grep();
+            grep("hi test.txt");
         }
         else if (strcmp(token, "help") == 0) {
             help();
