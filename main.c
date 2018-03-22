@@ -147,7 +147,7 @@ int main() {
     const char prompt[] = "ksh$ ";
     char input[80];
     const char d[] = " \n";
-    printf("Welcome to the Kennesaw Shell!\nType 'help' for available commands.");
+    printf("Welcome to the Kennesaw Shell!\nType 'help' for available commands.\n");
     do {
         printf("%s", prompt);
         fflush(stdout);
