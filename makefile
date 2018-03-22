@@ -1,5 +1,5 @@
 ksh: myshell.o mycommands.o
-	@g++ -g -o ksh myshell.o mycommands.o
+	@g++ -Wc++11-compat-deprecated-writable-strings -g -o ksh myshell.o mycommands.o
 
 myshell.o: myshell.cpp mycommands.h
 	@g++ -c myshell.cpp
