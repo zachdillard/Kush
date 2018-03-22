@@ -22,7 +22,7 @@ int cp(const char* src, const char* dest);
 //Searches for a string in a file and if found,
 //returns the line its found on
 //Author: Zach Dillard
-int grep(const char* input);
+int grep(const char* search, const char* file);
 
 void help(void);
 void clear(void);
