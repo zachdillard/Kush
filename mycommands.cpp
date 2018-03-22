@@ -144,18 +144,23 @@ int grep(const char input[]) {
         printf("Invalid file\n");
         return 1;
     }
-    char compare[100];
-    int index = 0;
     while((read = getline(&line, &length, file)) != -1) {
+        char compare[100];
+        int index = 0;
+        char* src = line;
+        char* cmp = input;
         for(int i = 0; i < length; i++) {
-            if(*line == *input) {
-                compare[index] = *line;
+            if(*src == *cmp) {
+                compare[index] = *src;
+                cmp++;
+                if(*cmp == '\0')
+                    break;
+                src++;
                 index++;
             }
-            line++;
-            input++;
         }
-        printf("%s\n", compare);
+        if(strcmp(input, compare) == 0)
+            printf("%s", line);
     }
     return 0;
 }
