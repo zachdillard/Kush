@@ -135,7 +135,7 @@ int cp(const char* src, const char* dest)
     return 0;
 }
 
-int grep(const char* input) {
+int grep(const char input[]) {
     char* line;
     size_t length = 0;
     ssize_t read;
@@ -144,7 +144,16 @@ int grep(const char* input) {
         printf("Invalid file\n");
         return 1;
     }
-    while((read = getline(&line, &length, file)) != -1);
+    char compare[100];
+    while((read = getline(&line, &length, file)) != -1) {
+        for(int i = 0; i < length, i++) {
+            if(*line == *input)
+                compare[i] = *line;
+            line++;
+            input++;
+        }
+    }
+    printf("%s\n", input);
     
     return 0;
 }
