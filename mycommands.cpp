@@ -135,11 +135,11 @@ int cp(const char* src, const char* dest)
     return 0;
 }
 
-int grep(const char* input) {
+int grep(const char* input, const char* filename) {
     char* line;
     size_t length = 0;
     ssize_t read;
-    FILE* file = fopen("test.txt", "r");
+    FILE* file = fopen(filename, "r");
     if(file == NULL) {
         printf("grep: %s: no such file or directory\n", "test.txt");
         return 1;
