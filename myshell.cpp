@@ -50,7 +50,11 @@ int main() {
                 printf("cp: %s: not a valid file or directory\n", src);
         }
         else if (strcmp(token, "grep") == 0) {
-            grep("crash");
+            char* search = strtok(NULL, d);
+            char* file;
+            while((file = strtok(NULL, d)) != NULL) {
+                grep(search, file);
+            }
         }
         else if (strcmp(token, "help") == 0) {
             help();
