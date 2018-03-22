@@ -144,6 +144,6 @@ void help(void) {
 }
 
 void clear(void) {
-    gotoxy(0, 0);
+    printf("\33[0;0H");
     printf("\33[2J");
 }
