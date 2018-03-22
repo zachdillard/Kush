@@ -47,7 +47,7 @@ int ls(void) {
             if(strncmp(file_name, ".", strlen(".")) != 0) {
                 if((i % 4 == 0) && (i != 0))
                     printf("\n");
-                printf("%-16s\t",file_name); //print directory
+                printf("%-15s\t",file_name); //print directory
                 ++i;
                }
         }
