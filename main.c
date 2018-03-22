@@ -6,79 +6,42 @@
 #include <stdarg.h>
 #include <sys/stat.h>
 #include <stdbool.h>
-
-#define IN 0
-#define OUT 1
-#define ERR 2
-#define TREE 0xF0, 0x9F, 0x8C, 0xB2, '\0'
-#define PSIZE 5
-#define INSIZE 32
-
-void string_clear(char* input, unsigned int size) {
-    for(int i = 0; i < size; i++)
-		*input++ = '\0';
-}
-
-int string_size(const char* src) {
-    int i = 0;
-    while(*src != '\0') {
-        i++;
-        src++;
-    }
-    return i;
-}
-
-bool string_equals(const char* src, const char* cmp) {
-    if(string_size(src) != string_size(cmp))
-        return false;
-    while(*src != '\0') {
-        if(*src != *cmp)
-            return false;
-        src++;
-        cmp++;
-    }
-    return true;
-}
-
-//experimental print function
-void print(const char* string) {
-    write(OUT, string, sizeof(string));
-}
+#include <time.h>
 
 int cat(const char* filename) {
-	FILE* file;
-	if((file = fopen(filename, "r")) == NULL)
-	{
-		printf("cat: %s: no such file or directory found\n", filename);
-	}
-	else
-	{
-		int getFileContents = fgetc(file);
-		while(getFileContents != EOF)
-		{
-			printf("%c", getFileContents);
-			getFileContents = fgetc(file);
-		}
-	}
-	fclose(file);
-	return 0;
+    FILE* file;
+    if((file = fopen(filename, "r")) == NULL)
+    {
+        printf("cat: %s: no such file or directory found\n", filename);
+    }
+    else
+    {
+        int getFileContents = fgetc(file);
+        while(getFileContents != EOF)
+        {
+            printf("%c", getFileContents);
+            getFileContents = fgetc(file);
+        }
+    }
+    fclose(file);
+    return 0;
 }
 
 int ls(void) {
-        DIR *dir;
-        struct dirent *dp;
-        char * file_name;
-        dir = opendir("."); //opens at current directory
-        while ((dp=readdir(dir)) != NULL) { //if first entry in dirent structure is null
-            if ( !strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..") )
-            {
-                continue;
-            } else {
-                file_name = dp->d_name; // file_name is allocated to char pointer
-                printf("%s\n",file_name); //print directory
-            }
+    DIR *dir;
+    struct dirent *dp;
+    char * file_name;
+    dir = opendir("."); //opens at current directory
+    while ((dp=readdir(dir)) != NULL) { //if first entry in dirent structure is null
+        if ( !strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..") )
+        {
+            continue;
+        } else {
+            file_name = dp->d_name; // file_name is allocated to char pointer
+            printf("%s\n",file_name); //print directory
         }
-        closedir(dir);
+    }
+    closedir(dir);
     return 0;
 }
 
@@ -89,8 +52,6 @@ int l(void){        //to go with ls function as ls -l
     char * file_name;
     char buf[512];
     dir = opendir(".");
-    struct passwd *tf;
-    struct group *gf;
     char *t;
     printf("Permissions   SLinks  Size  Type      Last Accessed\t    Name\n");
     while ((dp=readdir(dir)) != NULL) {
@@ -116,7 +77,7 @@ int l(void){        //to go with ls function as ls -l
             max_width = 8;
             value = fileStat.st_size;
             printf("%-5d ",value);
-
+            
             switch (fileStat.st_mode & S_IFMT) {
                 case S_IFBLK:  printf("%-5s","b  "); break; //Block special file
                 case S_IFCHR:  printf("%-5s","c  "); break; //Character special file
@@ -128,116 +89,70 @@ int l(void){        //to go with ls function as ls -l
                     //File type isn't identified
                 default:       printf("%-5s","-  "); break;
             }
-
-
         }
         if (t[strlen(t)-1] == '\n')
             t[strlen(t)-1] = '\0';
         printf("%-10s  ", t);
         printf("%-10s \n",file_name); //print directory
-
-
-
     }
     closedir(dir);
     return 0;
 }
 
-int cp(const char* src, const char* dest) 
+int cp(const char* src, const char* dest)
 {
-	FILE *f1;
-	FILE *f2;
-	long length;
-	
-	f1 = fopen(src, "r");
-	f2 = fopen(dest, "w");
-	if(f1 == NULL || f2 == NULL)
-		return 3;
-	fseek(f1,0L,SEEK_END);
-	length = ftell(f1);
-	printf("%ld\n", length);
-	rewind(f1);
-
-	char *buf = (char*) malloc(sizeof(char)*length);
-
-	size_t bytes = fread(buf, length, sizeof(char), f1);
-	
-	bytes = fwrite(buf, length, sizeof(char), f2);
-	
-	
-	fclose(f1);
-	fclose(f2);
-	free(buf);
-	return 0;
+    FILE *f1;
+    FILE *f2;
+    long length;
+    
+    f1 = fopen(src, "r");
+    f2 = fopen(dest, "w");
+    if(f1 == NULL || f2 == NULL)
+        return 3;
+    fseek(f1,0L,SEEK_END);
+    length = ftell(f1);
+    rewind(f1);
+    
+    char *buf = (char*) malloc(sizeof(char)*length);
+    size_t bytes = fread(buf, length, sizeof(char), f1);
+    bytes = fwrite(buf, length, sizeof(char), f2);
+    
+    fclose(f1);
+    fclose(f2);
+    free(buf);
+    return 0;
 }
 
 int grep() {
-	//grep "hi there" file1.txt file2.txt
-	printf("grep command\n");
-	return 0;
+    const char input[] = "hello test.txt";
+    char* line;
+    size_t length = 0;
+    ssize_t read;
+    FILE* file = fopen("test.txt", "r");
+    if(file == NULL) {
+        printf("Invalid file\n");
+        return 1;
+    }
+    while((read = getline(&line, &length, file)) != -1);
+    
+    return 0;
 }
 
-//for right now it can only parse the actual command
-//and not any options, for example:
-//can do
-//      cp
-//but not
-//      cp file1 file2
-bool is_command(const char* cmd) {
-    if(string_equals(cmd, "cat\n")) 
-        return true;
-    else if(string_equals(cmd, "ls\n") || string_equals(cmd, "ls -l\n"))
-        return true;
-    else if(string_equals(cmd, "cp\n"))
-        return true;
-    else if(string_equals(cmd, "grep\n"))
-        return true;
-    else
-        return false;
+int help() {
+    printf("cat\nls\ncp\n\grep\n");
+    return 0;
 }
 
 int main() {
-   /* //const char prompt[] = {TREE + ' '};
-	const char prompt[] = "$";
-	char input[INSIZE];
-prompt_start:
-    write(OUT, prompt, sizeof(prompt));
-	fflush(stdout);
-    string_clear(input, INSIZE);
-    //read(IN, input, INSIZE);
-	fgets(input, INSIZE, stdin);
-	const char d[2] = " ";
-	const char* token = strtok(input, d);
-	printf("%s", token);
-	printf("%d", strcmp(token, "ls"));
-    if(string_equals(input, "exit\n"))
-       return 0;
-    else {
-		if (is_command(input)) {
-			if (string_equals(input, "ls\n")) {
-				ls();
-			}
-			else if (string_equals(input, "ls -l\n")) {
-				l();
-			}
-			else {
-				write(OUT, "valid kush command\n", 19);
-			}
-		}
-        else
-            write(OUT, "not a valid kush command\n", 25);
-    }
-	goto prompt_start;*/
-
-	const char prompt[] = "$";
-	char input[80];
-	const char d[] = " \n";
-	do {
-		printf("%s", prompt);
-		fflush(stdout);
-		fgets(input, 80, stdin);
-		const char* token = strtok(input, d);
-		if (strcmp(token, "ls") == 0) {
+    const char prompt[] = "$ ";
+    char input[80];
+    const char d[] = " \n";
+    do {
+        printf("%s", prompt);
+        fflush(stdout);
+        fgets(input, 80, stdin);
+        const char* token = strtok(input, d);
+        if (strcmp(token, "ls") == 0) {
             const char* arg = strtok(NULL, d);
             if(arg == NULL) {
                 ls();
@@ -248,32 +163,35 @@ prompt_start:
             else {
                 printf("failure");
             }
-		}
-		else if (strcmp(token, "cat") == 0) {
-			char* filename = strtok(NULL, d);
-			cat(filename);
-		}
-		else if (strcmp(token, "cp") == 0) {
-			char* src = strtok(NULL, d);
-			if (src != NULL)
-			{
-				const char *dest = strtok(NULL, d);
-				if (dest != NULL)
-					cp(src, dest);
-				else
-				printf("Not a valid ls argument1\n");
-			}
-			else
-				printf("Not a valid ls argument2\n");
-		}
-		else if (strcmp(token, "grep") == 0) {
-			grep();
-		}
-		else {
-			if(strcmp("exit", token) != 0)
-				printf("Not a valid command\n");
-		}
-	} while (strcmp("exit", input) != 0);
-	
-	return 0;
+        }
+        else if (strcmp(token, "cat") == 0) {
+            char* filename = strtok(NULL, d);
+            cat(filename);
+        }
+        else if (strcmp(token, "cp") == 0) {
+            char* src = strtok(NULL, d);
+            if (src != NULL)
+            {
+                const char *dest = strtok(NULL, d);
+                if (dest != NULL)
+                    cp(src, dest);
+                else
+                    printf("Not a valid ls argument1\n");
+            }
+            else
+                printf("Not a valid ls argument2\n");
+        }
+        else if (strcmp(token, "grep") == 0) {
+            grep();
+        }
+        else if (strcmp(token, "help") == 0) {
+            help();
+        }
+        else {
+            if(strcmp("exit", token) != 0)
+                printf("Not a valid command\n");
+        }
+    } while (strcmp("exit", input) != 0);
+    
+    return 0;
 }
