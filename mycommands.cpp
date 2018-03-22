@@ -37,6 +37,7 @@ int ls(void) {
     struct dirent *dp;
     char * file_name;
     dir = opendir("."); //opens at current directory
+    int i = 0;
     while ((dp=readdir(dir)) != NULL) { //if first entry in dirent structure is null
         if ( !strcmp(dp->d_name, ".") || !strcmp(dp->d_name, "..") )
         {
@@ -44,10 +45,13 @@ int ls(void) {
         } else {
             file_name = dp->d_name; // file_name is allocated to char pointer
             if(strncmp(file_name, ".", strlen(".")) != 0) {
+                    if((i % 5 == 0) && (i != 0))
+                        printf("\n");
                     printf("%s\n",file_name); //print directory
                }
         }
     }
+    printf("\n");
     closedir(dir);
     return 0;
 }
