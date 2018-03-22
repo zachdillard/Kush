@@ -135,7 +135,7 @@ int cp(const char* src, const char* dest)
     return 0;
 }
 
-int grep(const char input[]) {
+int grep(char input[]) {
     char* line;
     size_t length = 0;
     ssize_t read;
