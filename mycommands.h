@@ -3,6 +3,16 @@
     Header file for the Kennesaw Shell commands
  ***************************************************/
 
+char* commands[] = {
+    "help",
+    "clear",
+    "exit",
+    "cat",
+    "ls",
+    "cp",
+    "grep"
+};
+
 //Displays contents of file
 //Author: Brett Warner
 int cat(const char* filename);
