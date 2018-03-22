@@ -1,3 +1,5 @@
+#pragma once
+
 #include "mycommands.h"
 
 #include <stdlib.h>
