@@ -24,6 +24,5 @@ int cp(const char* src, const char* dest);
 //Author: Zach Dillard
 int grep(const char* input);
 
-//Display available commands
-//Author: Zach Dillard
 void help(void);
+void clear(void);
