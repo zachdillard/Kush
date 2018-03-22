@@ -40,8 +40,8 @@ int ls(void) {
             continue;
         } else {
             file_name = dp->d_name; // file_name is allocated to char pointer
-            if(strncmp(dp->d_name, ".", sizeof(".")) != 0) {
-                    printf("%s\t",file_name); //print directory
+            if(strncmp(dp->file_name, ".", strlen(".")) != 0) {
+                    printf("%s\n",file_name); //print directory
                }
         }
     }
@@ -142,7 +142,13 @@ int grep(const char* input) {
 }
 
 void help(void) {
-    printf("cat\tls\tcp\tgrep\tclear\texit\t");
+    printf("cat\n" +
+           "ls\n" +
+           "cp\n" + 
+           "grep\n" +
+           "clear\n" +
+           "exit\n"
+          );
 }
 
 void clear(void) {
