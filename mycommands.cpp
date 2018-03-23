@@ -141,7 +141,7 @@ int grep(const char* input, const char* filename) {
     ssize_t read;
     FILE* file = fopen(filename, "r");
     if(file == NULL) {
-        printf("grep: %s: no such file or directory\n", "test.txt");
+        printf("grep: %s: no such file or directory\n", filename);
         return 1;
     }
     while((read = getline(&line, &length, file)) != -1) {
