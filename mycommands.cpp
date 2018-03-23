@@ -146,7 +146,7 @@ int grep(const char* input, const char* filename) {
     }
     while((read = getline(&line, &length, file)) != -1) {
         if(strstr(line, input) != NULL)
-            printf("%s", line);
+            printf("%s:%s", filename, line);
     }
     return 0;
 }
