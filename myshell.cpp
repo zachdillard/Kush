@@ -53,7 +53,6 @@ int main() {
             char* search = strtok(NULL, d);
             char* file;
             while((file = strtok(NULL, d)) != NULL) {
-                printf("%s:", file);
                 grep(search, file);
             }
         }
