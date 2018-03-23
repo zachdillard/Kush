@@ -136,7 +136,7 @@ int cp(const char* src, const char* dest)
 }
 
 int grep(const char* input, const char* filename) {
-    char* line;
+    char line[100];
     size_t length = 0;
     ssize_t read;
     FILE* file = fopen(filename, "r");
