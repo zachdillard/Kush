@@ -9,14 +9,18 @@
 #include <sys/stat.h>
 #include <stdbool.h>
 #include <time.h>
+#include <pwd.h>
 
 int main() {
     const char prompt[] = "ksh$ ";
+    char cwd[1024];
     char input[80];
     const char d[] = " \n";
     printf("Welcome to the Kennesaw Shell!\nType 'help' for available commands.\n");
     do {
-        printf("%s", prompt);
+        getcwd(cwd, sizeof(cwd));
+        printf("%s " , cwd);
+        printf("%s ", prompt);
         fflush(stdout);
         fgets(input, 80, stdin);
         const char* token = strtok(input, d);
@@ -54,6 +58,21 @@ int main() {
             char* file;
             while((file = strtok(NULL, d)) != NULL) {
                 grep(search, file);
+            }
+        }
+        if (strcmp(token, "cd") == 0) {
+            const char* arg = strtok(NULL, d);
+            DIR* dir = opendir(arg);
+            if(arg == NULL) {
+                cd();
+            }
+                else if(dir){
+
+                cd2(arg);
+
+            }
+            else {
+                printf("cd: illegal operation %s\n", arg);
             }
         }
         else if (strcmp(token, "help") == 0) {

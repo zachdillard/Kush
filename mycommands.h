@@ -1,3 +1,6 @@
+#ifndef MYCOMMANDS_H_
+#define MYCOMMANDS_H_
+
 /***************************************************
     mycommands.h
     Header file for the Kennesaw Shell commands
@@ -15,6 +18,13 @@ int ls(void);
 //Author: Pablo Novoa
 int l(void);
 
+//Changes current working directory to home directory
+//Author: Pablo Novoa
+int cd(void);
+//Changes current working directory to specified directory.
+//Author: Pablo Novoa
+int cd2(const char* arg);
+
 //Copy contents of one file to another location
 //Author: Jacob Crumbley
 int cp(const char* src, const char* dest);
@@ -24,5 +34,8 @@ int cp(const char* src, const char* dest);
 //Author: Zach Dillard
 int grep(const char* search, const char* file);
 
+
 void help(void);
 void clear(void);
+
+#endif // MYCOMMANDS_H
