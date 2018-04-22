@@ -1,5 +1,5 @@
 # Ksh
-The Kennesaw Shell is a simple command line interpeter that has six commands.
+The Kennesaw Shell is a simple command line interpeter that has eight commands.
 ## Commands
 ### help
 Display available commands.
@@ -15,3 +15,5 @@ Copy file to another location.
 Display contents of current directory.
 ### grep
 Search for a string of characters in a file.
+### cd
+Changes current working directory to home directory
