@@ -60,7 +60,7 @@ int main() {
                 grep(search, file);
             }
         }
-        if (strcmp(token, "cd") == 0) {
+        else if (strcmp(token, "cd") == 0) {
             const char* arg = strtok(NULL, d);
             DIR* dir = opendir(arg);
             if(arg == NULL) {
