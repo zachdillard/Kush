@@ -62,13 +62,13 @@ int main() {
         }
         else if (strcmp(token, "cd") == 0) {
             const char* arg = strtok(NULL, d);
-            DIR* dir = opendir(arg);
             if(arg == NULL) {
                 cd();
             }
-                else if(dir){
-
-                cd2(arg);
+            else if(arg != NULL){
+		DIR* dir = opendir(arg);
+		if(dir != NULL)
+                    cd2(arg);
 
             }
             else {

@@ -36,7 +36,7 @@ int cat(const char* filename) {
 int cd(void){
 
     char *home;
-    home = getenv("USERPROFILE");
+    home = getenv("HOME");
 
     chdir(home);
     return 0;
