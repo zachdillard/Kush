@@ -34,7 +34,11 @@ int cat(const char* filename) {
 }
 
 int cd(void){
-    chdir(getenv("HOME"));
+
+    char *home;
+    home = getenv("HOME");
+
+    chdir(home);
     return 0;
 }
 
