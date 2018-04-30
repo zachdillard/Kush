@@ -63,10 +63,7 @@ int killProcess(const char* pids, const char* sigs){
     pid_t pid = atoi(pids);
     int sig = atoi(sigs);
 
-
-
-
-    if(kill(pid, sig) == 0) {
+    if (kill(pid, sig) == 0) {
         printf("Process %d terminated \n", pid);
     }
 
