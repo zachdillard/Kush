@@ -3,14 +3,14 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-
 #include <sys/stat.h>
 #include <signal.h>
 #include <unistd.h>
 #include <dirent.h>
-
+#include <iostream>
 #include <string.h>
 #include <time.h>
+#include <dirent.h>
 
 extern char* commands[];
 extern size_t command_count;
@@ -31,15 +31,6 @@ int cat(const char* filename) {
         }
     }
     fclose(file);
-    return 0;
-}
-
-int cd(void){
-
-    char *home;
-    home = getenv("HOME");
-
-    chdir(home);
     return 0;
 }
 
@@ -70,6 +61,16 @@ int killProcess(const char* pids, const char* sigs){
 
 
 }
+
+int cd(void){
+
+    char *home;
+    home = getenv("HOME");
+
+    chdir(home);
+    return 0;
+}
+
 
 int cd2(const char* arg){
     DIR* dir = opendir(arg);
@@ -212,6 +213,149 @@ int cd2(const char* arg){
         }
         return 0;
     }
+
+int diff(const char* file1, const char* file2)
+{
+    char file1array[1000][100], file2array[1000][100], *line = NULL;
+	size_t length = 0;
+    int lines1 = 0;
+	int lines2 = 0;
+    int read1 =0, read2 =0;
+    FILE *f1, *f2; 
+	
+    f1 = fopen(file1, "r");
+    if(f1 == NULL) {printf("file 1 cannot be opened\n"); return 1;}
+	
+    f2 = fopen(file2, "r");
+    if(f2 == NULL) {printf("file 2 cannot be opened\n"); return 1;}
+	
+	while(fgets (file1array[lines1] , 100 , f1) != NULL)
+	{
+		if(lines1 == 1000)
+		{
+			printf("Error. Too many lines in file1.\n");
+			return 1;
+		}
+		++lines1;
+	}
+	
+	length = 0;
+	while(fgets (file2array[lines2] , 100 , f2) != NULL)
+	{
+		if(lines2 == 1000)
+		{
+			printf("Error. Too many lines in file2.\n");
+			return 1;
+		}
+		++lines2;
+	}
+	
+	int *l1, *l2;
+	l1 = (int*)calloc(lines1, sizeof(int));
+	l2 = (int*)calloc(lines2, sizeof(int));
+	
+	//if l1[i] || l2[j] == 0:unchecked, 1:remove, 2:add, 3:leave
+	for(int i =0; i < lines1; ++i)
+	{
+		for(int j =0; j < lines2; ++j)
+		{
+			while(l2[j] != 0)
+				++j;
+			if(strcmp(file1array[i],file2array[j])==0)
+			{l1[i] = 3; l2[j] = 3;}
+			
+			
+		}
+	}
+	
+	int *save = (int*) malloc(lines1*sizeof(int));
+	int save_spot =0;
+	//prints removals from file 1
+	for(int i = 0; i < lines1; ++i)
+	{ 
+		if(l1[i] == 0) 
+		{
+			save[save_spot] = i;
+			save_spot++;
+		}
+	}
+	int orig =0;
+	for(int i = 0; i < save_spot; ++i)
+	{
+		orig = i;
+		printf("%d", (save[i]+1));
+		if(i +1 < save_spot && save[i+1] == save[i]+1)
+		{
+			while(i+1 < save_spot && save[i+1] == save[i]+1)
+				++i;
+			printf(",%d", (save[i]+1));
+		}
+		printf("d");
+		int loc = 0;
+		int j =0;
+		while(loc == 0 && j < lines2)
+		{
+			if(strcmp(file1array[save[i]+1], file2array[j]) ==0)
+				loc = j;
+			else
+				j++;
+		}
+		printf("%d\n", loc);
+		while(orig <= i)
+		{
+			printf("< %s\n", file1array[save[orig]]);
+			orig++;
+		}
+	}
+	free(save);
+	
+	//prints additions from file2
+	save = (int*) malloc(lines1*sizeof(int));
+	save_spot = 0;
+	for(int j = 0; j < lines2; ++j)
+	{ 
+		if(l2[j] == 0) 
+		{
+			save[save_spot] = j;
+			save_spot++;
+		}
+	}
+	orig =0;
+	for(int j = 0; j < save_spot; ++j)
+	{
+		orig = j;
+		printf("%d", save[j]+1);
+		if(j +1 < save_spot && save[j+1] == save[j]+1)
+		{
+			while(j+1 < save_spot && save[j+1] == save[j]+1)
+				++j;
+			printf(",%d", save[j]+1);
+		}
+		printf("a");
+		int loc = 0;
+		int i =0;
+		while(loc == 0 && i < lines1)
+		{
+			if(strcmp(file2array[save[j]+1],file1array[i]) == 0)
+				loc = i;
+			else
+				i++;
+		}
+		printf("%d\n", loc);
+		while(orig <= j)
+		{
+			printf("> %s\n", file2array[save[orig]]);
+			orig++;
+		}
+	}
+	
+    free(save);
+	fclose(f1);
+    fclose(f2);
+	free(l1);
+	free(l2);
+	return 0;
+}
 
     void help(void) {
         size_t command_count = 7;
