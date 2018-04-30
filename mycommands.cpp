@@ -43,13 +43,31 @@ int cd(void){
     return 0;
 }
 
+int napTime(const char* seconds){
+
+    //int t = atoi(seconds);
+    int sec = atoi(seconds);
+
+    printf("I'll be back after a %s second nap! \n", sec);
+
+    sleep(sec);
+
+    printf("I'm back!");
+
+
+}
+
 int killProcess(const char* pids, const char* sigs){
 
 
-    pid_t pid = (pid_t) atoi(pids);
-    int sig = (int) atoi(sigs);
+    pid_t pid = atoi(pids);
+    int sig = atoi(sigs);
 
-    kill(pid, sig);
+
+
+    if(kill(pid, sig) == 0) {
+        printf("Process %s terminated \n", pid);
+    }
 
 
 

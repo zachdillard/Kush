@@ -24,7 +24,7 @@ int main() {
         fflush(stdout);
         fgets(input, 80, stdin);
         const char* token = strtok(input, d);
-        if(strcmp(token, "kill")){
+        if(strcmp(token, "kill") == 0){
            const char* pid = strtok(NULL, d);
            const char* sig = strtok(NULL, d);
 
@@ -66,6 +66,10 @@ int main() {
             while((file = strtok(NULL, d)) != NULL) {
                 grep(search, file);
             }
+        }
+        else if(strcmp(token, "sleep") == 0){
+            const char* arg = strtok(NULL, d);
+            napTime(arg);
         }
         else if (strcmp(token, "cd") == 0) {
             const char* arg = strtok(NULL, d);

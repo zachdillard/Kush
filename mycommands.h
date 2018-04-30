@@ -33,6 +33,10 @@ int cp(const char* src, const char* dest);
 //Author: Pablo Novoa
 int killProcess(const char* pid, const char* sig);
 
+//Puts current process to sleep for specified time before continuing or executing;
+//Author: Pablo Novoa
+int napTime(const char* seconds);
+
 //Searches for a string in a file and if found,
 //returns the line its found on
 //Author: Zach Dillard
