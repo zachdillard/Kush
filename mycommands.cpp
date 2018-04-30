@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include <sys/stat.h>
+#include <signal.h>
 #include <unistd.h>
 #include <dirent.h>
 
@@ -40,6 +41,37 @@ int cd(void){
 
     chdir(home);
     return 0;
+}
+
+int napTime(const char* seconds){
+
+    int s = atoi(seconds);
+    unsigned int t = s;
+
+    printf("I'm going to sleep for %d seconds! \n", s);
+
+    sleep(t);
+
+    printf("What a great nap. I'm back! \n");
+
+
+}
+
+int killProcess(const char* pids, const char* sigs){
+
+
+    pid_t pid = atoi(pids);
+    int sig = atoi(sigs);
+
+
+
+
+    if(kill(pid, sig) == 0) {
+        printf("Process %d terminated \n", pid);
+    }
+
+
+
 }
 
 int cd2(const char* arg){

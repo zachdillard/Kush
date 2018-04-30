@@ -36,6 +36,15 @@ int main() {
                 printf("ls: illegal operation %s\n", arg);
             }
         }
+        else if(strcmp(token, "kill") == 0){
+            const char* pid = strtok(NULL, d);
+            const char* sig = strtok(NULL, d);
+            killProcess(pid, sig);
+        }
+        else if(strcmp(token, "sleep")==0){
+            const char* seconds = strtok(NULL, d);
+            napTime(seconds);
+        }
         else if (strcmp(token, "cat") == 0) {
             char* filename = strtok(NULL, d);
             cat(filename);

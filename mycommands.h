@@ -18,6 +18,16 @@ int ls(void);
 //Author: Pablo Novoa
 int l(void);
 
+//Sends kill signal to process
+//Author: Pablo Novoa
+int killProcess(const char* pids, const char* sigs);
+
+//Sends sleep signal for specified time
+//Author: Pablo Novoa
+
+int napTime(const char* seconds);
+
+
 //Changes current working directory to home directory
 //Author: Pablo Novoa
 int cd(void);
