@@ -84,6 +84,19 @@ int main() {
                 printf("cd: illegal operation %s\n", arg);
             }
         }
+		else if (strcmp(token, "diff") == 0) {
+            char* file1 = strtok(NULL, d);
+            if (file1 != NULL)
+            {
+                const char *file2 = strtok(NULL, d);
+                if (file2 != NULL)
+                    diff(file1, file2);
+                else
+                    printf("diff: %s: not a valid file or directory\n", file2);
+            }
+            else
+                printf("diff: %s: not a valid file or directory\n", file1);
+        }
         else if (strcmp(token, "help") == 0) {
             help();
         }

@@ -44,6 +44,10 @@ int cp(const char* src, const char* dest);
 //Author: Zach Dillard
 int grep(const char* search, const char* file);
 
+//prints changes needed to be made to file1 to
+//produce file 2
+//Author: Jacob Crumbley
+int diff(const char* file1, const char* file2);
 
 void help(void);
 void clear(void);
