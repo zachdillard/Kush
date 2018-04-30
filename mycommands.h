@@ -29,6 +29,10 @@ int cd2(const char* arg);
 //Author: Jacob Crumbley
 int cp(const char* src, const char* dest);
 
+//Sends signal to process to either terminate or kill it
+//Author: Pablo Novoa
+int killProcess(const char* pid, const char* sig);
+
 //Searches for a string in a file and if found,
 //returns the line its found on
 //Author: Zach Dillard

@@ -24,7 +24,14 @@ int main() {
         fflush(stdout);
         fgets(input, 80, stdin);
         const char* token = strtok(input, d);
-        if (strcmp(token, "ls") == 0) {
+        if(strcmp(token, "kill")){
+           const char* pid = strtok(NULL, d);
+           const char* sig = strtok(NULL, d);
+
+           killProcess(pid,sig);
+
+        }
+        else if (strcmp(token, "ls") == 0) {
             const char* arg = strtok(NULL, d);
             if(arg == NULL) {
                 ls();
@@ -66,13 +73,14 @@ int main() {
                 cd();
             }
             else if(arg != NULL){
-		DIR* dir = opendir(arg);
-		if(dir != NULL)
+		        DIR* dir = opendir(arg);
+		        if(dir != NULL){
                     cd2(arg);
 
-            }
+                }
             else {
                 printf("cd: illegal operation %s\n", arg);
+                 }
             }
         }
         else if (strcmp(token, "help") == 0) {

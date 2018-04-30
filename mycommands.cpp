@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 #include <sys/stat.h>
+#include <signal.h>
 #include <unistd.h>
 #include <dirent.h>
 
@@ -40,6 +41,18 @@ int cd(void){
 
     chdir(home);
     return 0;
+}
+
+int killProcess(const char* pids, const char* sigs){
+
+
+    pid_t pid = (pid_t) atoi(pids);
+    int sig = (int) atoi(sigs);
+
+    kill(pid, sig);
+
+
+
 }
 
 int cd2(const char* arg){
