@@ -49,6 +49,26 @@ int main() {
             char* filename = strtok(NULL, d);
             cat(filename);
         }
+	 else if(strcmp(token, "kill") == 0){
+
+            const char* pid = strtok(NULL, d);
+            const char* sig = strtok(NULL, d);
+            if(pid == NULL || sig == NULL){
+                printf("Error: null argument. Process id and signal number needed. \n");
+            }
+            else {
+                killProcess(pid, sig);
+            }
+        }
+        else if(strcmp(token, "sleep")==0){
+            const char* seconds = strtok(NULL, d);
+            if(seconds == NULL){
+                printf("Error: seconds must be declared \n");
+            }
+            else {
+                napTime(seconds);
+            }
+        }
         else if (strcmp(token, "cp") == 0) {
             char* src = strtok(NULL, d);
             if (src != NULL)
