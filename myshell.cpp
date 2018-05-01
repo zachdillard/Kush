@@ -64,26 +64,6 @@ int main() {
             char* filename = strtok(NULL, d);
             cat(filename);
         }
-		else if(strcmp(token, "kill") == 0){
-
-            const char* pid = strtok(NULL, d);
-            const char* sig = strtok(NULL, d);
-            if(pid == NULL || sig == NULL){
-                printf("Error: null argument. Process id and signal number needed. \n");
-            }
-            else {
-                killProcess(pid, sig);
-            }
-        }
-        else if(strcmp(token, "sleep")==0){
-            const char* seconds = strtok(NULL, d);
-            if(seconds == NULL){
-                printf("Error: seconds must be declared \n");
-            }
-            else {
-                napTime(seconds);
-            }
-        }
         else if (strcmp(token, "cp") == 0) {
             char* src = strtok(NULL, d);
             if (src != NULL)
@@ -119,7 +99,7 @@ int main() {
                 printf("cd: illegal operation %s\n", arg);
             }
         }
-		else if (strcmp(token, "diff") == 0) {
+	else if (strcmp(token, "diff") == 0) {
             char* file1 = strtok(NULL, d);
             if (file1 != NULL)
             {
@@ -132,13 +112,13 @@ int main() {
             else
                 printf("diff: %s: not a valid file or directory\n", file1);
         }
-		else if(strcmp(token, "mkdir") == 0) {
-			char * dir = strtok(NULL, d);
-			if(dir != NULL)
-				mkdir(dir);
-			else
-				printf("mkdir: please provide directory path\n");
-		}
+	else if(strcmp(token, "mkdir") == 0) {
+		char * dir = strtok(NULL, d);
+		if(dir != NULL)
+			mkdir(dir);
+		else
+			printf("mkdir: please provide directory path\n");
+	}
 	else if(strcmp(token, "rmdir") == 0) {
 			char * dir = strtok(NULL, d);
 			if(dir != NULL)
