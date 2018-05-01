@@ -53,6 +53,10 @@ int diff(const char* file1, const char* file2);
 //Author: Jacob Crumbley
 int mkdir(const char* dir);
 
+//prints out all environment variables
+//Author: Brett Warner
+int env();
+
 void help(void);
 void clear(void);
 

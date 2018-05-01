@@ -14,6 +14,7 @@
 
 extern char* commands[];
 extern size_t command_count;
+extern char** environ;
 
 int cat(const char* filename) {
     FILE* file;
@@ -382,7 +383,21 @@ int diff(const char* file1, const char* file2)
 			}
 		}
 	}
-	
+
+int env()
+{
+	int i = 0;
+	char *s = *environ;
+
+	for(; s; i++)
+	{
+		printf("%s\n", s);
+		s = *(environ+i);
+	}
+	return i;
+}
+
+
     void help(void) {
         size_t command_count = 7;
         char *commands[] = {

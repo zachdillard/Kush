@@ -141,6 +141,9 @@ int main() {
         else if (strcmp(token, "clear") == 0) {
             clear();
         }
+	else if(strcmp(token, "env" == 0)) {
+		env();
+	}
         else {
             if(strcmp("exit", token) != 0)
                 printf("ksh: %s: command not found\n", token);
