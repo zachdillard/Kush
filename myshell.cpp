@@ -130,11 +130,9 @@ int main() {
 	else if(strcmp(token, "waitfor") == 0) {
 		char* argc = strtok(NULL, d);
 		if(argc != NULL)
-		{
 			waitfor(argc);
 		else
 			printf("The child process is not a valid process.\n");
-		}
 	}
         else if (strcmp(token, "help") == 0) {
             help();
