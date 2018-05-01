@@ -135,6 +135,13 @@ int main() {
 			else
 				printf("mkdir: please provide directory path\n");
 		}
+	else if(strcmp(token, "rmdir") == 0) {
+			char * dir = strtok(NULL, d);
+			if(dir != NULL)
+				rmd(dir);
+			else
+				printf("rmdir: please provide directory path\n");
+		}
         else if (strcmp(token, "help") == 0) {
             help();
         }
