@@ -13,16 +13,14 @@
 #include <dirent.h>
 #include <pwd.h>
 #include <grp.h>
+#include <sys/wait.h>
+
 
 extern char* commands[];
 extern size_t command_count;
 extern char** environ;
 
 #define _GNU_SOURCE
-#include <string.h>
-#include <sys/stat.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 int stat(char* path)
 {
@@ -466,7 +464,7 @@ int diff(const char* file1, const char* file2)
 			}
 		}
 	}
-//gives segmentation fault currently
+
 int env()
 {
 	int i = 0;
@@ -479,6 +477,48 @@ int env()
 	}
 	return i;
 }
+
+int waitfor(const char* argc)
+{
+	//if parent process calls wait, allow child to finish and then terminate it
+	pid_t cpid, w;
+	int status;
+	cpid = fork();
+	if(cpid == -1) {
+		perror("fork.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	if(cpid == 0) {
+		printf("Child Process ID is %ld\n.", (long) getpid());
+		if(argc != NULL)
+			pause();
+		_exit(atoi(argc));
+	}
+
+	else {
+	    do {
+		w = waitpid(cpid, &status, WUNTRACED | WCONTINUED);
+		if(w == -1) {
+			perror("waitpid");
+			exit(EXIT_FAILURE);
+		}
+
+		if(WIFEXITED(status)) {
+			printf("exited with status=%d\n", WEXITSTATUS(status));
+		} else if(WIFSIGNALED(status)) {
+			printf("killed by signal %d\n",WTERMSIG(status));
+		} else if(WIFSTOPPED(status)) {
+			printf("Stopped by signal %d\n", WIFSTOPPED(status));
+		} else if(WIFCONTINUED(status)) {
+			printf("Continuing child process %ld\n",(long) getpid());
+		}
+
+	    } while(!WIFEXITED(status) && !WIFSIGNALED(status));
+	      exit(EXIT_SUCCESS);
+	}
+}
+
 
 	int rmd(const char* dir)
 	{
@@ -514,7 +554,7 @@ int env()
 	}
 
     void help(void) {
-        size_t command_count = 7;
+        size_t command_count = 9;
         char *commands[] = {
                 "help",
                 "clear",
@@ -522,7 +562,9 @@ int env()
                 "cat",
                 "ls",
                 "cp",
-                "grep"
+                "grep",
+		"env",
+		"waitfor"
         };
         for (int i = 0; i < command_count; i++) {
             if ((i % 4) == 0 && i != 0)

@@ -61,6 +61,10 @@ int mkdir(const char* dir);
 //Author: Brett Warner
 int env();
 
+//makes the parent process wait for the child process to finish
+//Author: Brett Warner
+int waitfor(const char* argc);
+
 //removes directory if no files founds
 //Author: Jacob Crumbley
 int rmd(const char* dir);
