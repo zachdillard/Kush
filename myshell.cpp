@@ -200,11 +200,11 @@ int main() {
 			try{
 				Timeout timeout(time); timeout.start();
 				char* tok = strtok(NULL, d);
-				if (strcmp(token, "stat") == 0) {
+				if (strcmp(tok, "stat") == 0) {
 					char* path = strtok(NULL, d);
 					stat(path);
       				}
-       				else if (strcmp(token, "ls") == 0) {
+       				else if (strcmp(tok, "ls") == 0) {
             				const char* arg = strtok(NULL, d);
             				if(arg == NULL) {
                 				ls();
@@ -216,7 +216,7 @@ int main() {
                 				printf("ls: illegal operation %s\n", arg);
             				}
         			}
-      	  			else if(strcmp(token, "kill") == 0){
+      	  			else if(strcmp(tok, "kill") == 0){
 
             				const char* pid = strtok(NULL, d);
             				const char* sig = strtok(NULL, d);
@@ -227,7 +227,7 @@ int main() {
                 				killProcess(pid, sig);
             				}
         			}
-        			else if(strcmp(token, "sleep")==0){
+        			else if(strcmp(tok, "sleep")==0){
             				const char* seconds = strtok(NULL, d);
             				if(seconds == NULL){
                 				printf("Error: seconds must be declared \n");
@@ -236,11 +236,11 @@ int main() {
                 				napTime(seconds);
             				}
         			}
-        			else if (strcmp(token, "cat") == 0) {
+        			else if (strcmp(tok, "cat") == 0) {
             				char* filename = strtok(NULL, d);
             				cat(filename);
         			}
-        			else if (strcmp(token, "cp") == 0) {
+        			else if (strcmp(tok, "cp") == 0) {
             				char* src = strtok(NULL, d);
             				if (src != NULL)
             				{
@@ -253,14 +253,14 @@ int main() {
             				else
                 				printf("cp: %s: not a valid file or directory\n", src);
         			}
-        			else if (strcmp(token, "grep") == 0) {
+        			else if (strcmp(tok, "grep") == 0) {
             				char* search = strtok(NULL, d);
             				char* file;
             				while((file = strtok(NULL, d)) != NULL) {
                 				grep(search, file);
             				}
         			}
-        			else if (strcmp(token, "cd") == 0) {
+        			else if (strcmp(tok, "cd") == 0) {
             				const char* arg = strtok(NULL, d);
             				if(arg == NULL) {
                 				cd();
@@ -275,7 +275,7 @@ int main() {
                 				printf("cd: illegal operation %s\n", arg);
             				}
         			}
-				else if (strcmp(token, "diff") == 0) {
+				else if (strcmp(tok, "diff") == 0) {
             				char* file1 = strtok(NULL, d);
             				if (file1 != NULL)
             				{
@@ -288,34 +288,34 @@ int main() {
             				else
                 				printf("diff: %s: not a valid file or directory\n", file1);
         			}
-				else if(strcmp(token, "mkdir") == 0) {
+				else if(strcmp(tok, "mkdir") == 0) {
 					char * dir = strtok(NULL, d);
 					if(dir != NULL)
 						mkdir(dir);
 					else
 						printf("mkdir: please provide directory path\n");
 				}
-				else if(strcmp(token, "rmdir") == 0) {
+				else if(strcmp(tok, "rmdir") == 0) {
 					char * dir = strtok(NULL, d);
 					if(dir != NULL)
 						rmd(dir);
 					else
 						printf("rmdir: please provide directory path\n");
 				}
-				else if(strcmp(token, "waitfor") == 0) {
+				else if(strcmp(tok, "waitfor") == 0) {
 					char* argc = strtok(NULL, d);
 					if(argc != NULL)
 						waitfor(argc);
 					else
 						printf("The child process is not a valid process.\n");
 				}
-        			else if (strcmp(token, "help") == 0) {
+        			else if (strcmp(tok, "help") == 0) {
             				help();
         			}
-        			else if (strcmp(token, "clear") == 0) {
+        			else if (strcmp(tok, "clear") == 0) {
             				clear();
         			}
-				else if(strcmp(token, "env") == 0) {
+				else if(strcmp(tok, "env") == 0) {
 					env();
 				}
 				else
