@@ -447,6 +447,38 @@ int env()
 	return i;
 }
 
+	int rmd(const char* dir)
+	{
+		DIR* d = opendir(dir);
+		if(d)
+		{
+			int n =0;
+			struct dirent *entry;
+			entry = readdir(d);
+			while(entry != NULL)
+			{
+				++n;
+				entry = readdir(d);
+			}
+			if(n <= 2)
+			{
+				closedir(d);
+				remove(dir);
+				printf("Directory %s removed\n", dir);
+			}
+			else
+			{
+				closedir(d);
+				printf("Files found in %s, delete files before removing directory\n", dir);
+				return 1;
+			}
+		}
+		else
+		{
+			printf("Directory %s not found\n", dir);
+			return 1;
+		}
+	}
 
     void help(void) {
         size_t command_count = 7;
