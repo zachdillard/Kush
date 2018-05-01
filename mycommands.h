@@ -61,6 +61,10 @@ int mkdir(const char* dir);
 //Author: Brett Warner
 int env();
 
+//removes directory if no files founds
+//Author: Jacob Crumbley
+int rmd(const char* dir);
+
 void help(void);
 void clear(void);
 
