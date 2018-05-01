@@ -8,7 +8,7 @@
 
 //Shows file status information
 //Author: Zach Dillard
-int stat(const char* path);
+int stat(char* path);
 
 //Displays contents of file
 //Author: Brett Warner

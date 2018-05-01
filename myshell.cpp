@@ -24,7 +24,11 @@ int main() {
         fflush(stdout);
         fgets(input, 80, stdin);
         const char* token = strtok(input, d);
-        if (strcmp(token, "ls") == 0) {
+       if (strcmp(token, "stat") == 0) {
+		char* path = strtok(NULL, d);
+		stat(path);
+       }
+       else if (strcmp(token, "ls") == 0) {
             const char* arg = strtok(NULL, d);
             if(arg == NULL) {
                 ls();
@@ -148,7 +152,7 @@ int main() {
         else if (strcmp(token, "clear") == 0) {
             clear();
         }
-	else if(strcmp(token, "env" == 0)) {
+	else if(strcmp(token, "env") == 0) {
 		env();
 	}
         else {

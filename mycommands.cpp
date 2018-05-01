@@ -16,31 +16,23 @@ extern char* commands[];
 extern size_t command_count;
 extern char** environ;
 
-//
-//  stat.cpp
-//  
-//
-//  Created by Zach Dillard on 5/1/18.
-//
-
 #define _GNU_SOURCE
-
-#include "stat.hpp"
 #include <string.h>
 #include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-int stat(const char* path)
+int stat(char* path)
 {
     struct stat buffer;
-    FILE* file = fopen(path, "r");
+    const char* cpath = path;
+    FILE* file = fopen(cpath, "r");
     if (file == NULL)
     {
-        printf("stat: cannot stat '%s': No such file or directory", path);
+        printf("stat: cannot stat '%s': No such file or directory", cpath);
         return 1;
     }
-    stat(path, &buffer);
+    stat(cpath, &buffer);
     char* mode;
     if (S_ISREG(buffer.st_mode))
         mode = "file";
@@ -58,11 +50,11 @@ int stat(const char* path)
     printf("Inode: %u\t", buffer.st_ino);
     printf("Links: %u\n", buffer.st_nlink);
     
-    struct timespec access = buffer.st_atime;
-    struct timespec modify = buffer.st_mtime;
-    struct timespec status = buffer.st_ctime;
+    long int access = buffer.st_atime;
+    long int modify = buffer.st_mtime;
+    long int status = buffer.st_ctime;
     
-    printf("%lld.%.9ld", (long long)access.tv_sec, access.tv_nsec);
+    printf("%l\n", access);
     return 0;
 }
 
