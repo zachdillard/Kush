@@ -11,6 +11,8 @@
 #include <string.h>
 #include <time.h>
 #include <dirent.h>
+#include <pwd.h>
+#include <grp.h>
 
 extern char* commands[];
 extern size_t command_count;
@@ -35,7 +37,12 @@ int stat(char* path)
     stat(cpath, &buffer);
     char* mode;
     if (S_ISREG(buffer.st_mode))
-        mode = "file";
+    {
+	if (buffer.st_size == 0)
+	    mode = "regular empty file";
+	else
+	    mode = "regular file";
+    }
     else if (S_ISDIR(buffer.st_mode))
         mode = "directory";
     else
@@ -46,15 +53,49 @@ int stat(char* path)
     printf("Blocks: %llu\t", (unsigned long long) buffer.st_blocks);
     printf("IO Block: %llu\t", (unsigned long long) buffer.st_blksize);
     printf("%s\n", mode);
-    printf("Device: %u\t", buffer.st_dev);
+    printf("Device: %xh/%dd\t", buffer.st_dev, buffer.st_dev);
     printf("Inode: %u\t", buffer.st_ino);
     printf("Links: %u\n", buffer.st_nlink);
-    
-    long int access = buffer.st_atime;
-    long int modify = buffer.st_mtime;
-    long int status = buffer.st_ctime;
-    
-    printf("%l\n", access);
+    int bufferchmod = buffer.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO);
+    printf("Access: (%o)/", bufferchmod);
+    printf((S_ISDIR(buffer.st_mode)) ? "d" : "-");
+    printf((buffer.st_mode & S_IRUSR) ? "r" : "-");
+    printf((buffer.st_mode & S_IWUSR) ? "w" : "-");
+    printf((buffer.st_mode & S_IXUSR) ? "x" : "-");
+    printf((buffer.st_mode & S_IRGRP) ? "r" : "-");
+    printf((buffer.st_mode & S_IWGRP) ? "w" : "-");
+    printf((buffer.st_mode & S_IXGRP) ? "x" : "-");
+    printf((buffer.st_mode & S_IROTH) ? "r" : "-");
+    printf((buffer.st_mode & S_IWOTH) ? "w" : "-");
+    printf((buffer.st_mode & S_IXOTH) ? "x" : "-");
+    printf(")  ");
+ 
+    struct group *g = getgrgid(buffer.st_gid);
+    struct passwd *u = getpwuid(buffer.st_uid);
+    printf("Uid: ( %u/ %s)  ", buffer.st_uid, u->pw_name);
+    printf("Gid: ( %u/ %s)\n", buffer.st_gid, g->gr_name);
+   
+    time_t a = buffer.st_atime;
+    struct tm at;
+    gmtime_r(&a, &at);
+    char atimebuf[80];
+    strftime(atimebuf, sizeof(atimebuf), "%Y-%m-%d %H:%M:%S", &at);
+    printf("Access: %s\n", atimebuf);
+  
+    time_t m = buffer.st_mtime;
+    struct tm lt;
+    gmtime_r(&m, &lt);
+    char timebuf[80];
+    strftime(timebuf, sizeof(timebuf), "%Y-%m-%d %H:%M:%S", &lt);
+    printf("Modify: %s\n", timebuf);
+
+   time_t c = buffer.st_ctime;
+   struct tm ct;
+   gmtime_r(&c, &ct);
+   char ctimebuf[80];
+   strftime(ctimebuf, sizeof(ctimebuf), "%Y-%m-%d %H:%M:%S", &ct);
+   printf("Change: %s\n", ctimebuf);
+   printf("Birth: -\n");
     return 0;
 }
 
