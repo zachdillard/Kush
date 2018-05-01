@@ -44,7 +44,6 @@ public:
 		if (setjmp(env) != 0) {
 			// Don't do anything except throw here, since the state
 			// is... funky...
-			printf("Alarm fired\n", ptr);
 			throw global_timeout_instance;
 		}
 		signal(SIGALRM, alarm_handler);
