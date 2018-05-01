@@ -383,7 +383,7 @@ int diff(const char* file1, const char* file2)
 			}
 		}
 	}
-
+//gives segmentation fault currently
 int env()
 {
 	int i = 0;
