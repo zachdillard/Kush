@@ -383,7 +383,7 @@ int diff(const char* file1, const char* file2)
 			}
 		}
 	}
-//gives segmentation fault currently
+
 int env()
 {
 	int i = 0;
@@ -399,7 +399,7 @@ int env()
 
 
     void help(void) {
-        size_t command_count = 7;
+        size_t command_count = 8;
         char *commands[] = {
                 "help",
                 "clear",
@@ -407,7 +407,8 @@ int env()
                 "cat",
                 "ls",
                 "cp",
-                "grep"
+                "grep",
+		"env"
         };
         for (int i = 0; i < command_count; i++) {
             if ((i % 4) == 0 && i != 0)
