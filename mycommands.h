@@ -49,6 +49,10 @@ int grep(const char* search, const char* file);
 //Author: Jacob Crumbley
 int diff(const char* file1, const char* file2);
 
+//makes a new directory if not made at dir
+//Author: Jacob Crumbley
+int mkdir(const char* dir);
+
 void help(void);
 void clear(void);
 

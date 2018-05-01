@@ -357,6 +357,32 @@ int diff(const char* file1, const char* file2)
 	return 0;
 }
 
+	int mkdir(const char* dir)
+	{
+		DIR* d = opendir(dir);
+		if(d) //directory exists
+		{
+			printf("Directory %s already exists\n", dir);
+			closedir(d);
+			return 0;
+		}
+		else
+		{
+			int i = mkdir(dir, S_IRWXU);
+			if(i == 0) //successful make
+			{
+				printf("Directory %s successfully created\n", dir);
+				return 0;
+			
+			}
+			else //other error occured
+			{
+				printf("Error making directory %s\n", dir);
+				return 1;
+			}
+		}
+	}
+	
     void help(void) {
         size_t command_count = 7;
         char *commands[] = {
