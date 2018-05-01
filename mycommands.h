@@ -6,6 +6,10 @@
     Header file for the Kennesaw Shell commands
  ***************************************************/
 
+//Shows file status information
+//Author: Zach Dillard
+int stat(const char* path);
+
 //Displays contents of file
 //Author: Brett Warner
 int cat(const char* filename);
