@@ -16,6 +16,48 @@ extern char* commands[];
 extern size_t command_count;
 extern char** environ;
 
+#define _GNU_SOURCE
+#include <string.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int stat(char* path)
+{
+    struct stat buffer;
+    const char* cpath = path;
+    FILE* file = fopen(cpath, "r");
+    if (file == NULL)
+    {
+        printf("stat: cannot stat '%s': No such file or directory", cpath);
+        return 1;
+    }
+    stat(cpath, &buffer);
+    char* mode;
+    if (S_ISREG(buffer.st_mode))
+        mode = "file";
+    else if (S_ISDIR(buffer.st_mode))
+        mode = "directory";
+    else
+        mode = "unknown";
+    char* filename = basename(path);
+    printf("  File: %s\n", filename);
+    printf("  Size: %jd\t", buffer.st_size);
+    printf("Blocks: %llu\t", (unsigned long long) buffer.st_blocks);
+    printf("IO Block: %llu\t", (unsigned long long) buffer.st_blksize);
+    printf("%s\n", mode);
+    printf("Device: %u\t", buffer.st_dev);
+    printf("Inode: %u\t", buffer.st_ino);
+    printf("Links: %u\n", buffer.st_nlink);
+    
+    long int access = buffer.st_atime;
+    long int modify = buffer.st_mtime;
+    long int status = buffer.st_ctime;
+    
+    printf("%l\n", access);
+    return 0;
+}
+
 int cat(const char* filename) {
     FILE* file;
     if((file = fopen(filename, "r")) == NULL)
@@ -397,6 +439,38 @@ int env()
 	return i;
 }
 
+	int rmd(const char* dir)
+	{
+		DIR* d = opendir(dir);
+		if(d)
+		{
+			int n =0;
+			struct dirent *entry;
+			entry = readdir(d);
+			while(entry != NULL)
+			{
+				++n;
+				entry = readdir(d);
+			}
+			if(n <= 2)
+			{
+				closedir(d);
+				remove(dir);
+				printf("Directory %s removed\n", dir);
+			}
+			else
+			{
+				closedir(d);
+				printf("Files found in %s, delete files before removing directory\n", dir);
+				return 1;
+			}
+		}
+		else
+		{
+			printf("Directory %s not found\n", dir);
+			return 1;
+		}
+	}
 
     void help(void) {
         size_t command_count = 8;

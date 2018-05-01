@@ -6,6 +6,10 @@
     Header file for the Kennesaw Shell commands
  ***************************************************/
 
+//Shows file status information
+//Author: Zach Dillard
+int stat(char* path);
+
 //Displays contents of file
 //Author: Brett Warner
 int cat(const char* filename);
@@ -56,6 +60,10 @@ int mkdir(const char* dir);
 //prints out all environment variables
 //Author: Brett Warner
 int env();
+
+//removes directory if no files founds
+//Author: Jacob Crumbley
+int rmd(const char* dir);
 
 void help(void);
 void clear(void);

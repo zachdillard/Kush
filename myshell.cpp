@@ -24,7 +24,11 @@ int main() {
         fflush(stdout);
         fgets(input, 80, stdin);
         const char* token = strtok(input, d);
-        if (strcmp(token, "ls") == 0) {
+       if (strcmp(token, "stat") == 0) {
+		char* path = strtok(NULL, d);
+		stat(path);
+       }
+       else if (strcmp(token, "ls") == 0) {
             const char* arg = strtok(NULL, d);
             if(arg == NULL) {
                 ls();
@@ -135,13 +139,20 @@ int main() {
 			else
 				printf("mkdir: please provide directory path\n");
 		}
+	else if(strcmp(token, "rmdir") == 0) {
+			char * dir = strtok(NULL, d);
+			if(dir != NULL)
+				rmd(dir);
+			else
+				printf("rmdir: please provide directory path\n");
+		}
         else if (strcmp(token, "help") == 0) {
             help();
         }
         else if (strcmp(token, "clear") == 0) {
             clear();
         }
-	else if(strcmp(token, "env" == 0)) {
+	else if(strcmp(token, "env") == 0) {
 		env();
 	}
         else {
