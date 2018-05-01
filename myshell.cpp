@@ -76,7 +76,7 @@ int main() {
             }
             else
                 printf("cp: %s: not a valid file or directory\n", src);
-        }
+        }y
         else if (strcmp(token, "grep") == 0) {
             char* search = strtok(NULL, d);
             char* file;
@@ -126,6 +126,16 @@ int main() {
 			else
 				printf("rmdir: please provide directory path\n");
 		}
+
+	else if(strcmp(token, "waitfor") == 0) {
+		char* argc = strtok(NULL, d);
+		if(argc != NULL)
+		{
+			waitfor(argc);
+		else
+			printf("The child process is not a valid process.\n");
+		}
+	}
         else if (strcmp(token, "help") == 0) {
             help();
         }
