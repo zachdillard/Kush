@@ -16,6 +16,56 @@ extern char* commands[];
 extern size_t command_count;
 extern char** environ;
 
+//
+//  stat.cpp
+//  
+//
+//  Created by Zach Dillard on 5/1/18.
+//
+
+#define _GNU_SOURCE
+
+#include "stat.hpp"
+#include <string.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int stat(const char* path)
+{
+    struct stat buffer;
+    FILE* file = fopen(path, "r");
+    if (file == NULL)
+    {
+        printf("stat: cannot stat '%s': No such file or directory", path);
+        return 1;
+    }
+    stat(path, &buffer);
+    char* mode;
+    if (S_ISREG(buffer.st_mode))
+        mode = "file";
+    else if (S_ISDIR(buffer.st_mode))
+        mode = "directory";
+    else
+        mode = "unknown";
+    char* filename = basename(path);
+    printf("  File: %s\n", filename);
+    printf("  Size: %jd\t", buffer.st_size);
+    printf("Blocks: %llu\t", (unsigned long long) buffer.st_blocks);
+    printf("IO Block: %llu\t", (unsigned long long) buffer.st_blksize);
+    printf("%s\n", mode);
+    printf("Device: %u\t", buffer.st_dev);
+    printf("Inode: %u\t", buffer.st_ino);
+    printf("Links: %u\n", buffer.st_nlink);
+    
+    struct timespec access = buffer.st_atime;
+    struct timespec modify = buffer.st_mtime;
+    struct timespec status = buffer.st_ctime;
+    
+    printf("%lld.%.9ld", (long long)access.tv_sec, access.tv_nsec);
+    return 0;
+}
+
 int cat(const char* filename) {
     FILE* file;
     if((file = fopen(filename, "r")) == NULL)
