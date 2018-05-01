@@ -76,7 +76,7 @@ int main() {
             }
             else
                 printf("cp: %s: not a valid file or directory\n", src);
-        }y
+        }
         else if (strcmp(token, "grep") == 0) {
             char* search = strtok(NULL, d);
             char* file;
