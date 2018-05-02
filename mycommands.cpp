@@ -431,11 +431,9 @@ int diff(const char* file1, const char* file2)
 		}
 	}
 	
-    free(save);
+    
 	fclose(f1);
-    fclose(f2);
-	free(l1);
-	free(l2);
+    	fclose(f2);
 	return 0;
 }
 
