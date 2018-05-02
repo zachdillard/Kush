@@ -481,22 +481,31 @@ int env()
 int waitfor(const char* argc)
 {
 	//if parent process calls wait, allow child to finish and then terminate it
-	pid_t cpid, w;
+	/*pid_t cpid, w;
 	int status;
 	cpid = fork();
 	if(cpid == -1) {
 		perror("fork.\n");
 		exit(EXIT_FAILURE);
-	}
+	}*/
 
-	if(cpid == 0) {
+	/*if(cpid == 0) {
 		printf("Child Process ID is %ld\n.", (long) getpid());
 		if(argc != NULL)
 			pause();
 		_exit(atoi(argc));
+	}*/
+	
+	pid_t cpid;
+	int status;
+	
+	if (argc == NULL) {
+		printf("Invalid pid\n");
+		return 1;
 	}
 
 	else {
+	pid_t = (pid_t) atoi(argc);
 	    do {
 		w = waitpid(cpid, &status, WUNTRACED | WCONTINUED);
 		if(w == -1) {
