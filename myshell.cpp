@@ -174,7 +174,7 @@ int main() {
 				printf("rmdir: please provide directory path\n");
 		}
 
-	else if(strcmp(token, "waitfor") == 0) {
+	else if(strcmp(token, "wait") == 0) {
 		char* argc = strtok(NULL, d);
 		if(argc != NULL)
 			waitfor(argc);
@@ -301,7 +301,7 @@ int main() {
 					else
 						printf("rmdir: please provide directory path\n");
 				}
-				else if(strcmp(tok, "waitfor") == 0) {
+				else if(strcmp(tok, "wait") == 0) {
 					char* argc = strtok(NULL, d);
 					if(argc != NULL)
 						waitfor(argc);
