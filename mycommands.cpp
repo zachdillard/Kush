@@ -496,7 +496,7 @@ int waitfor(const char* argc)
 		_exit(atoi(argc));
 	}*/
 	
-	pid_t cpid;
+	pid_t cpid, w;
 	int status;
 	
 	if (argc == NULL) {
@@ -505,7 +505,7 @@ int waitfor(const char* argc)
 	}
 
 	else {
-	pid_t = (pid_t) atoi(argc);
+	cpid = (pid_t) atoi(argc);
 	    do {
 		w = waitpid(cpid, &status, WUNTRACED | WCONTINUED);
 		if(w == -1) {
