@@ -1,5 +1,5 @@
 # Ksh
-The Kennesaw Shell is a simple command line interpeter that has eight commands.
+The Kennesaw Shell is a simple command line interpeter built for CS4512.
 ## Commands
 ### help
 Display available commands.
